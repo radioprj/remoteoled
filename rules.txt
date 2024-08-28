@@ -1,0 +1,23 @@
+On Data1* Do
+ OledFramedCmd,1,"%eventvalue1%"
+ OledFramedCmd,2,"%eventvalue2%"
+ OledFramedCmd,3,"%eventvalue3%"
+Endon
+On Data2* Do
+ OledFramedCmd,1,"CPU: %eventvalue2%%   TEMP: %eventvalue3%{D}C"
+ OledFramedCmd,2,"IP %eventvalue1%"
+ OledFramedCmd,3,"%eventvalue4%"
+Endon
+On Data3* Do
+ OledFramedCmd,1,"CPU: %eventvalue2%% TEMP: %eventvalue3% | %eventvalue4%{D}C"
+ OledFramedCmd,2,"IP %eventvalue1%"
+ OledFramedCmd,3,"%eventvalue5%" 
+Endon
+On Data4* Do
+ OledFramedCmd,1,"%eventvalue2%"
+ OledFramedCmd,2,"TG %eventvalue1%"
+ OledFramedCmd,3,"%eventvalue3%"
+Endon
+On Clock#Time=All,00:00 Do
+ Reboot
+EndOn
