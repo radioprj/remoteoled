@@ -143,7 +143,7 @@ def oledcontrast_low(lval):
   global driver
   if driver == "ssd1309":
      payload = {'cmd':'OLEDFRAMEDCMD,display,user,'+str(lval)+',0,0'}
-  if driver == "sh1106" or driver == "ssd1306":
+  if driver == "sh1106":
      payload = {'cmd':'OLEDFRAMEDCMD,display,user,'+str(lval)+',241,64'}
   try:
       response = requests.get('http://'+ip_address+'/control', params=payload, timeout=2)
@@ -164,7 +164,7 @@ def oledcontrast_nor(nval):
   global driver
   if driver == "ssd1309":
      payload = {'cmd':'OLEDFRAMEDCMD,display,user,10,'+str(nval)+',0'}
-  if driver == "sh1106" or driver == "ssd1306":
+  if driver == "sh1106":
      payload = {'cmd':'OLEDFRAMEDCMD,display,user,'+str(nval)+',241,64'}
   try:
       response = requests.get('http://'+ip_address+'/control', params=payload, timeout=1)
