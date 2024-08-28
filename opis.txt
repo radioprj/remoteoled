@@ -1,0 +1,65 @@
+Remote OLED to przesyłanie danych przez internet domowy z hotspota do OLED
+który jest połączony z płytką Wemos D1 mini (WIFI 2.4 GHz) 
+Dane wysyłane to aktywność TG na svxlink oraz danych systemowych obciążenie 
+CPU i jego temperatura lub dodatkowo jeśli podłączony jest czujnik 
+DS18B20 temperaturę z czujnika.
+Rozwiązanie to może być wygodne kiedy hotspot FM jest ulokowany w miejscu z dala 
+od miejsca, w którym używasz radia FM do łączności np na strych, w garażu, innym
+pomieszczeniu. Dzięki Remote OLED widzisz na przenośnym wyświetlaczu 
+aktywność na grupach które monitorujesz oraz informacje systemowe.
+
+
+Katalog ESPEasyFlasher/ zawiera program pod MS Windows do wgrywania firmware
+W katalogu tym jest w miarę najnowszy firmware dla ESP8266 oraz pusty obraz o nazwie
+blank_4MB.bin jeśli jest potrzeba wykasowania zwartości wgranej do Wemos D1/ESP8266.
+
+Plik o nazwie rules.txt zawiera wykaz rules, które należy wkopiować w ESPEasy w menu "Rules"
+
+Opis podłączenia OLED do Wemos D1 mini oraz wgrywanie i konfiguracji ESPEasy 
+znajdziesz w osobnym dokumencie o nazwie RemoteOLED.pdf
+
+Kiedy uruchomisz OLED z Wemos D1 mini oraz masz skonfigurowany ESPEasy i masz ustawiony 
+stały IP adres Wemos D1 możesz uruchomić instalacje pakietów niezbędnych do uruchomienia
+programu w Python3 do wysyłania danych do Remote OLED przez sieć domową internet.
+Wykonaj polecenie:
+
+sudo /opt/fmpoland/remoteoled/install-pkg.sh
+
+Konfiguracja programu znajduje się w pliku /opt/fmpoland/remoteoled/remoteoled.ini
+
+Podajemy stały IP adres pod którym jest dostępny Wemos D1:
+
+ip_address = 
+
+Podajesz nazwę/typ zastosowanego OLED podłączonego z Wemos D1 w 
+driver = 
+
+np sh1106 lub ssd1309
+
+Możesz ustawić kontrast/jasność OLED w zależności od rodzaju jaki masz 
+podłączony do Wemos D1. Wynika to że sterowanie kontrastu/jasności odbywa się
+na różne sposoby w zależności od typu OLED. Staraj się używać sugerowanych wartości
+w opisie remoteoled.ini
+
+contrast_nor =
+contrast_low =
+
+Jeśli masz podłączony czujnik temperatury DS18B20 ustawa wartość True w linii
+
+ext_temp_sensor =
+
+Po skonfigurowaniu programu możesz ręcznie uruchomić poleceniem
+
+sudo systemctl start remoteoled
+
+Aby obsługa Remote OLED była uruchamiana przy starcie systemu należy wpisać
+
+sudo systemctl enable remoteoled
+
+Restart svxlink powoduje restart usługi remoteoled.service
+
+
+UWAGA:
+Wykorzystanie skryptów i opisów używasz na własną odpowiedzialność i 
+autor nie ponosi odpowiedzialności za wykorzystane rozwiązanie 
+i wynikające z niego skutki.
