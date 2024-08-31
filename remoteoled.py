@@ -9,7 +9,7 @@
 #
 # Offset temperatury CPU dla OZPI V1 LTS wynosi 30 
 # dla innych komputerow SBC  ustawic 0
-temp_offset = 30
+temp_offset = 0
 
 import argparse
 import configparser
