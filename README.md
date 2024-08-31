@@ -25,7 +25,9 @@ git clone https://github.com/radioprj/remoteoled.git
 
 cd remoteoled/
 
-Czytaj plik **opis.txt** gdzie znajdziesz informacje o konfiguracji
+Czytaj plik **opis.txt** gdzie znajdziesz informacje o konfiguracji oraz
+[RemoteOLED.pdf](https://github.com/radioprj/remoteoled/blob/main/RemoteOLED.pdf)
+
 
 
 
