@@ -16,7 +16,8 @@ blank_4MB.bin jeśli jest potrzeba wykasowania zwartości wgranej do Wemos D1/ES
 Plik o nazwie rules.txt zawiera wykaz rules, które należy wkopiować w ESPEasy w menu "Rules"
 
 Opis podłączenia OLED do Wemos D1 mini oraz wgrywanie i konfiguracji ESPEasy 
-znajdziesz w osobnym dokumencie o nazwie RemoteOLED.pdf
+znajdziesz w osobnym dokumencie o nazwie RemoteOLED.pdf 
+https://github.com/radioprj/remoteoled/blob/main/RemoteOLED.pdf
 
 Kiedy uruchomisz OLED z Wemos D1 mini oraz masz skonfigurowany ESPEasy i masz ustawiony 
 stały IP adres Wemos D1 możesz uruchomić instalacje pakietów niezbędnych do uruchomienia
