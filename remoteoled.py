@@ -27,7 +27,7 @@ import time
 import requests
 from requests.exceptions import HTTPError
 from unidecode import unidecode
-#from cleantext import clean
+
 
 from datetime import datetime, timedelta
 from json.decoder import JSONDecodeError
@@ -463,7 +463,6 @@ class Screen:
         self.__update_tgnames()
         if str(tg) in self.tg_names:
             tgn = re.sub(r'[^a-zA-Z0-9ążźśćęńłóĄŻŹŚĆĘŃŁÓ:,\-\s]',"",self.tg_names[str(tg)])
-            #tgn = clean(self.tg_names[str(tg)],no_emoji=True).upper()
             # limit characters
             return str(tgn)[:28]
         return "Nieznana"
