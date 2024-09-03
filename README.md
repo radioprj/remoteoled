@@ -1,7 +1,9 @@
 # remoteoled
-Remote OLED for SVXLink
 
 **To jest projekt hobbystyczny i rozwija się w autora własnym tempie.**
+
+**Remote OLED for SVXLink**
+-----------------------
 
 Wyświetlanie  akatywności z svxlink na TG oraz informacji systemowych
 na wyswietlaczach typu OLED poprzez sieć internet.
