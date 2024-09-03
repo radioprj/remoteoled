@@ -15,19 +15,19 @@ Wyświetlacz podpiety do płytki Wemos D1 mini na bazie ESP8266
 **Instalacja pakietu**
 ---------------------
 
-sudo -s
+**sudo -s**
 
-cd /opt
+**cd /opt**
 
-jeśli nie masz katalogu "fmpoland" utwórz go poleceniem
+jeśli nie masz katalogu **fmpoland** utwórz go poleceniem
 
-mkdir fmpoland
+**mkdir fmpoland**
 
-cd fmpoland/
+**cd fmpoland/**
 
-git clone https://github.com/radioprj/remoteoled.git
+**git clone https://github.com/radioprj/remoteoled.git**
 
-cd remoteoled/
+**cd remoteoled/**
 
 Czytaj plik **opis.txt** gdzie znajdziesz informacje o konfiguracji oraz
 [RemoteOLED.pdf](https://github.com/radioprj/remoteoled/blob/main/RemoteOLED.pdf)
