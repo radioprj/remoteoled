@@ -1,6 +1,8 @@
 # remoteoled
 Remote OLED for SVXLink
 
+**To jest projekt hobbystyczny i rozwija się w autora własnym tempie.**
+
 Wyświetlanie  akatywności z svxlink na TG oraz informacji systemowych
 na wyswietlaczach typu OLED poprzez sieć internet.
 
@@ -28,6 +30,8 @@ cd remoteoled/
 Czytaj plik **opis.txt** gdzie znajdziesz informacje o konfiguracji oraz
 [RemoteOLED.pdf](https://github.com/radioprj/remoteoled/blob/main/RemoteOLED.pdf)
 
+
+**Używasz na własną odpowiedzialność i autor nie ponosi odpowiedzialności za wykorzystane rozwiązanie i wynikające z niego skutki**
 
 
 
