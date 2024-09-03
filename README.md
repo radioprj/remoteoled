@@ -2,7 +2,7 @@
 
 **To jest projekt hobbystyczny i rozwija się w autora własnym tempie.**
 
-**Remote OLED for SVXLink**
+**Remote OLED SVXLink**
 -----------------------
 
 Wyświetlanie  akatywności z svxlink na TG oraz informacji systemowych
