@@ -8,7 +8,7 @@
 Wyświetlanie  akatywności z svxlink na TG oraz informacji systemowych
 na wyswietlaczach typu OLED poprzez sieć internet.
 
-Rekomendowane wyświetlacze: **SSD1309** 2.4 cala lub **SH1106** 1.3 cala
+Rekomendowane wyświetlacze I2C: **SSD1309** 2.4 cala lub **SH1106** 1.3 cala
 
 Wyświetlacz podpiety do płytki Wemos D1 mini na bazie ESP8266
 
