@@ -72,7 +72,7 @@ def shutdown_msg():
 
 def status1_ip_msg(ipa,cl,tc,tga):
   global ip_address
-  payload = {'cmd':'event,Data2='+ipa+','+cl+','+tc+',"'+tga+'"'}
+  payload = {'cmd':'event,Data2='+ipa+','+cl+','+tc+',"'+unidecode(tga)+'"'}
   try:
       response = requests.get('http://'+ip_address+'/control', params=payload, timeout=1)
       response.raise_for_status()
@@ -89,7 +89,7 @@ def status1_ip_msg(ipa,cl,tc,tga):
 
 def status2_ip_msg(ipa,cl,tc,th,tga):
   global ip_address
-  payload = {'cmd':'event,Data3='+ipa+','+cl+','+tc+','+th+',"'+tga+'"'}
+  payload = {'cmd':'event,Data3='+ipa+','+cl+','+tc+','+th+',"'+unidecode(tga)+'"'}
   try:
       response = requests.get('http://'+ip_address+'/control', params=payload, timeout=1)
       response.raise_for_status()
@@ -545,12 +545,12 @@ class Screen:
 
     def __update_tg(self):
         if self.current_call.state == 'start' or self.show_last:
-            return "TG: "+str(self.current_tg)
+            return "TG "+str(self.current_tg)
         else:
             if self.current_tg == 0:
                return self.get_tgname(self.current_tg)
             else:
-               return "TG: "+str(self.current_tg)+" "+self.get_tgname(self.current_tg)
+               return "TG "+str(self.current_tg)+" "+self.get_tgname(self.current_tg)
 
     def __update_ip(self):
         def __find_ips():
