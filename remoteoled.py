@@ -27,7 +27,7 @@ import time
 import requests
 from requests.exceptions import HTTPError
 from unidecode import unidecode
-
+#from cleantext import clean
 
 from datetime import datetime, timedelta
 from json.decoder import JSONDecodeError
@@ -38,7 +38,7 @@ from watchdog.events import FileSystemEventHandler
 
 def welcome_msg():
   global ip_address
-  payload = {'cmd':'event,Data1="FM POLAND","Ham Radio","N E T W O R K"'}
+  payload = {'cmd':'event,Data="FM POLAND","Ham Radio","N E T W O R K"'}
   try:
       response = requests.get('http://'+ip_address+'/control', params=payload, timeout=1)
       response.raise_for_status()
@@ -55,7 +55,7 @@ def welcome_msg():
 
 def shutdown_msg():
   global ip_address
-  payload = {'cmd':'event,Data1="      ","R e m o t e  D i s p l a y","S h u t d o w n"'}
+  payload = {'cmd':'event,Data="      ","R e m o t e  D i s p l a y","S h u t d o w n"'}
   try:
       response = requests.get('http://'+ip_address+'/control', params=payload, timeout=1)
       response.raise_for_status()
@@ -72,7 +72,10 @@ def shutdown_msg():
 
 def status1_ip_msg(ipa,cl,tc,tga):
   global ip_address
-  payload = {'cmd':'event,Data2='+ipa+','+cl+','+tc+',"'+unidecode(tga)+'"'}
+  ipad = "IP "+str(ipa)
+  status = "CPU: "+str(cl)+"%   TEMP: "+str(tc)+"{D}C"
+  payload = {'cmd':'event,Data="'+str(status)+'","'+ipad+'","'+unidecode(tga)+'"'}
+  #payload = {'cmd':'event,Data2='+ipa+','+cl+','+tc+',"'+unidecode(tga)+'"'}
   try:
       response = requests.get('http://'+ip_address+'/control', params=payload, timeout=1)
       response.raise_for_status()
@@ -89,7 +92,9 @@ def status1_ip_msg(ipa,cl,tc,tga):
 
 def status2_ip_msg(ipa,cl,tc,th,tga):
   global ip_address
-  payload = {'cmd':'event,Data3='+ipa+','+cl+','+tc+','+th+',"'+unidecode(tga)+'"'}
+  ipad = "IP "+str(ipa)
+  status = "CPU: "+str(cl)+"% TEMP: "+str(tc)+" | "+str(th)+"{D}C"
+  payload = {'cmd':'event,Data="'+str(status)+'","'+ipad+'","'+unidecode(tga)+'"'}
   try:
       response = requests.get('http://'+ip_address+'/control', params=payload, timeout=1)
       response.raise_for_status()
@@ -106,7 +111,8 @@ def status2_ip_msg(ipa,cl,tc,th,tga):
 
 def talker_msg(tgnr,call,tgname):
   global ip_address
-  payload = {'cmd':'event,Data4='+tgnr+','+call+',"'+unidecode(tgname)+'"'}
+  tgn = "TG "+str(tgnr)
+  payload = {'cmd':'event,Data="'+str(call)+'","'+str(tgn)+'","'+unidecode(tgname)+'"'}
   try:
       response = requests.get('http://'+ip_address+'/control', params=payload, timeout=1)
       response.raise_for_status()
@@ -120,6 +126,7 @@ def talker_msg(tgnr,call,tgname):
       logger.debug(f"Timeout Error:",errt)
   except requests.exceptions.RequestException as err:
       logger.debug(f"OOps: Something Else",err)
+
 
 def ref_status(rstatus):
   global ip_address
@@ -143,7 +150,7 @@ def oledcontrast_low(lval):
   global driver
   if driver == "ssd1309":
      payload = {'cmd':'OLEDFRAMEDCMD,display,user,'+str(lval)+',0,0'}
-  if driver == "sh1106":
+  if driver == "sh1106" or driver == "ssd1306":
      payload = {'cmd':'OLEDFRAMEDCMD,display,user,'+str(lval)+',241,64'}
   try:
       response = requests.get('http://'+ip_address+'/control', params=payload, timeout=2)
@@ -164,7 +171,7 @@ def oledcontrast_nor(nval):
   global driver
   if driver == "ssd1309":
      payload = {'cmd':'OLEDFRAMEDCMD,display,user,10,'+str(nval)+',0'}
-  if driver == "sh1106":
+  if driver == "sh1106" or driver == "ssd1306":
      payload = {'cmd':'OLEDFRAMEDCMD,display,user,'+str(nval)+',241,64'}
   try:
       response = requests.get('http://'+ip_address+'/control', params=payload, timeout=1)
@@ -672,8 +679,8 @@ class Screen:
 
     def shutdown(self):
         ref_status("      ")
+        oledcontrast_nor(self.contrast_normal_val)
         shutdown_msg()
-        oledcontrast_low(self.contrast_low_val)
         time.sleep(2)
         oled_off()
         sys.exit(0)
