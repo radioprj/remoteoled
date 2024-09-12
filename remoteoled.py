@@ -75,7 +75,6 @@ def status1_ip_msg(ipa,cl,tc,tga):
   ipad = "IP "+str(ipa)
   status = "CPU: "+str(cl)+"%   TEMP: "+str(tc)+"{D}C"
   payload = {'cmd':'event,Data="'+str(status)+'","'+ipad+'","'+unidecode(tga)+'"'}
-  #payload = {'cmd':'event,Data2='+ipa+','+cl+','+tc+',"'+unidecode(tga)+'"'}
   try:
       response = requests.get('http://'+ip_address+'/control', params=payload, timeout=1)
       response.raise_for_status()
