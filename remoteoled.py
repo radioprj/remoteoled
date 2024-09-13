@@ -481,7 +481,7 @@ class Screen:
                self.display_off = False
             return False
         tdiff = datetime.now() - self.current_call.entrytime
-        if tdiff > timedelta(seconds=self.screensaver_time) and tdiff <= timedelta(seconds=240):
+        if tdiff > timedelta(seconds=self.screensaver_time):
             # Display OFF 
             if not self.display_off and not self.show_last:
                oled_off()
