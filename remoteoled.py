@@ -523,7 +523,7 @@ class Screen:
         if self.calls and len(self.calls):
             while self.calls:
                 call = self.calls.pop(0)
-                if self.current_tg == 0 or call.tgnum == self.current_tg:
+                if self.current_tg != 0 or call.tgnum == self.current_tg:
                     self.__update_talker(call)
                     talker_shown = True
                     self.current_call = call
