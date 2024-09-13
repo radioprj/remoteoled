@@ -74,7 +74,7 @@ def status1_ip_msg(ipa,cl,tc,tga):
   global ip_address
   ipad = "IP "+str(ipa)
   status = "CPU: "+str(cl)+"%   TEMP: "+str(tc)+"{D}C"
-  payload = {'cmd':'event,Data="'+str(status)+'","'+ipad+'","'+unidecode(tga)+'"'}
+  payload = {'cmd':'event,Data="'+str(status)+'","'+str(ipad)[:22]+'","'+unidecode(str(tga)[:22])+'"'}
   try:
       response = requests.get('http://'+ip_address+'/control', params=payload, timeout=1)
       response.raise_for_status()
@@ -93,7 +93,7 @@ def status2_ip_msg(ipa,cl,tc,th,tga):
   global ip_address
   ipad = "IP "+str(ipa)
   status = "CPU: "+str(cl)+"% TEMP: "+str(tc)+" | "+str(th)+"{D}C"
-  payload = {'cmd':'event,Data="'+str(status)+'","'+ipad+'","'+unidecode(tga)+'"'}
+  payload = {'cmd':'event,Data="'+str(status)+'","'+str(ipad)[:22]+'","'+unidecode(str(tga)[:22])+'"'}
   try:
       response = requests.get('http://'+ip_address+'/control', params=payload, timeout=1)
       response.raise_for_status()
@@ -470,7 +470,7 @@ class Screen:
         if str(tg) in self.tg_names:
             tgn = re.sub(r'[^a-zA-Z0-9ążźśćęńłóĄŻŹŚĆĘŃŁÓ:,\-\s]',"",self.tg_names[str(tg)])
             # limit characters
-            return str(tgn)[:28]
+            return str(tgn)[:22]
         return "Nieznana"
 
     def save_screen(self):
@@ -481,15 +481,15 @@ class Screen:
                self.display_off = False
             return False
         tdiff = datetime.now() - self.current_call.entrytime
-        if tdiff > timedelta(seconds=self.screensaver_time):
+        if tdiff > timedelta(seconds=self.screensaver_time) and tdiff <= timedelta(seconds=240):
             # Display OFF 
             if not self.display_off and not self.show_last:
                oled_off()
                self.display_off = True
             return True
         # Display ON
-        #oled_on()
-        #return False
+        oled_on()
+        return False
 
     def __update_status(self):
         self.contrast_low()
@@ -523,13 +523,12 @@ class Screen:
         if self.calls and len(self.calls):
             while self.calls:
                 call = self.calls.pop(0)
-                if self.current_tg != 0 or call.tgnum == self.current_tg:
+                if self.current_tg == 0 or call.tgnum == self.current_tg:
                     self.__update_talker(call)
                     talker_shown = True
                     self.current_call = call
                     self.contrast_lock()
                     self.show_last = True
-
         if talker_shown:
             return
 
@@ -559,47 +558,15 @@ class Screen:
                return "TG "+str(self.current_tg)+" "+self.get_tgname(self.current_tg)
 
     def __update_ip(self):
-        def __find_ips():
-            ips = []
-            ips4 = []
-            ips6 = []
-            nics = psutil.net_if_addrs()
-            for nic, addrs in nics.items():
-                if nic == "lo":
-                    continue
-                for addr in addrs:
-                    if addr.family not in [ socket.AF_INET, socket.AF_INET6 ]:
-                        continue
-                    # skip IPv6 link local addresses
-                    if '%' in addr.address:
-                        continue
-                    if addr.family == socket.AF_INET:
-                        ips4.append(addr.address)
-                    else:
-                        ips6.append(addr.address)
-            # prefer ipv4 and show ipv6 only if no ipv4 are available
-            if ips4:
-                ips = ips4
-            elif ips6:
-                ips = ips6
-            ips.sort()
-            if len(ips):
-                self.ips = ips
-            else:
-                self.ips = ["---.---.---.---"]
-
-        def __get_ip_index_to_display():
-            time_per_ip = 60 / len(self.ips)
-            ip_index = datetime.now().second // time_per_ip
-            return int(ip_index)
-
-        __find_ips()
-        ip_index = __get_ip_index_to_display()
-
-        msg = self.ips[ip_index]
-        if len(self.ips) > 1:
-            msg += " (%d/%d)" % (ip_index + 1, len(self.ips))
-        return msg
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        s.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
+        s.connect(('<broadcast>', 12345))  # 12345 is random port
+        ipa = s.getsockname()[0]
+        if len(ipa):
+             self.ipa = ipa
+        else:
+            self.ipa = "---.---.---.---"
+        return self.ipa 
 
     def update_temp_and_load(self):
         def __get_cpu():
