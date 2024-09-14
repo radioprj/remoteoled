@@ -1,8 +1,0 @@
-On Data* Do
- OledFramedCmd,1,"%eventvalue1%"
- OledFramedCmd,2,"%eventvalue2%"
- OledFramedCmd,3,"%eventvalue3%"
-Endon
-On Clock#Time=All,00:00 Do
- Reboot
-Endon
