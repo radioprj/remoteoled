@@ -24,7 +24,8 @@ stały IP adres Wemos D1 możesz uruchomić instalacje pakietów niezbędnych do
 programu w Python3 do wysyłania danych do Remote OLED przez sieć domową internet.
 Wykonaj polecenie:
 
-sudo /opt/fmpoland/remoteoled/install-pkg.sh
+sudo -s
+/opt/fmpoland/remoteoled/install-pkg.sh
 
 Konfiguracja programu znajduje się w pliku /opt/fmpoland/remoteoled/remoteoled.ini
 
