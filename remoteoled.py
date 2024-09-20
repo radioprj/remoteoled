@@ -113,7 +113,7 @@ def talker_msg(tgnr,call,tgname):
   tgn = "TG "+str(tgnr)
   payload = {'cmd':'event,Data="'+str(call)+'","'+str(tgn)+'","'+unidecode(tgname)+'"'}
   try:
-      response = requests.get('http://'+ip_address+'/control', params=payload, timeout=1)
+      response = requests.get('http://'+ip_address+'/control', params=payload)
       response.raise_for_status()
       if response:
          logger.debug(f"Send Talker info ")
@@ -131,7 +131,7 @@ def ref_status(rstatus):
   global ip_address
   payload = {'cmd':'OLEDFRAMEDCMD,userDef1,"'+str(rstatus)+'"'}
   try:
-      response = requests.get('http://'+ip_address+'/control', params=payload, timeout=1)
+      response = requests.get('http://'+ip_address+'/control', params=payload)
       response.raise_for_status()
       if response:
          logger.debug(f"Send Reflector Status ")
@@ -190,7 +190,7 @@ def oled_off():
   global ip_address
   payload = {'cmd':'OLEDFRAMEDCMD,display,off'}
   try:
-      response = requests.get('http://'+ip_address+'/control', params=payload, timeout=1)
+      response = requests.get('http://'+ip_address+'/control', params=payload)
       response.raise_for_status()
       if response:
          logger.debug(f"Send display off ")
