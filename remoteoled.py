@@ -40,7 +40,7 @@ def welcome_msg():
   global ip_address
   payload = {'cmd':'event,Data="FM POLAND","Ham Radio","N E T W O R K"'}
   try:
-      response = requests.get('http://'+ip_address+'/control', params=payload, timeout=1)
+      response = requests.get('http://'+ip_address+'/control', params=payload, timeout=5)
       response.raise_for_status()
       if response:
          logger.debug(f"Send welcome message")
@@ -57,7 +57,7 @@ def shutdown_msg():
   global ip_address
   payload = {'cmd':'event,Data="      ","R e m o t e  D i s p l a y","S h u t d o w n"'}
   try:
-      response = requests.get('http://'+ip_address+'/control', params=payload, timeout=1)
+      response = requests.get('http://'+ip_address+'/control', params=payload, timeout=5)
       response.raise_for_status()
       if response:
          logger.debug(f"Send shutdown message")
@@ -76,7 +76,7 @@ def status1_ip_msg(ipa,cl,tc,tga):
   status = "CPU: "+str(cl)+"%   TEMP: "+str(tc)+"{D}C"
   payload = {'cmd':'event,Data="'+str(status)+'","'+str(ipad)[:22]+'","'+unidecode(str(tga)[:22])+'"'}
   try:
-      response = requests.get('http://'+ip_address+'/control', params=payload, timeout=1)
+      response = requests.get('http://'+ip_address+'/control', params=payload, timeout=5)
       response.raise_for_status()
       if response:
          logger.debug(f"Send IP address and status message - cpu load and temperature, ATG")
@@ -95,7 +95,7 @@ def status2_ip_msg(ipa,cl,tc,th,tga):
   status = "CPU: "+str(cl)+"% TEMP: "+str(tc)+" | "+str(th)+"{D}C"
   payload = {'cmd':'event,Data="'+str(status)+'","'+str(ipad)[:22]+'","'+unidecode(str(tga)[:22])+'"'}
   try:
-      response = requests.get('http://'+ip_address+'/control', params=payload, timeout=1)
+      response = requests.get('http://'+ip_address+'/control', params=payload, timeout=5)
       response.raise_for_status()
       if response:
          logger.debug(f"Send IP address and status message - cpu load, temp and DS18B20, ATG")
@@ -113,7 +113,7 @@ def talker_msg(tgnr,call,tgname):
   tgn = "TG "+str(tgnr)
   payload = {'cmd':'event,Data="'+str(call)+'","'+str(tgn)+'","'+unidecode(tgname)+'"'}
   try:
-      response = requests.get('http://'+ip_address+'/control', params=payload)
+      response = requests.get('http://'+ip_address+'/control', params=payload,timeout=5)
       response.raise_for_status()
       if response:
          logger.debug(f"Send Talker info ")
@@ -131,7 +131,7 @@ def ref_status(rstatus):
   global ip_address
   payload = {'cmd':'OLEDFRAMEDCMD,userDef1,"'+str(rstatus)+'"'}
   try:
-      response = requests.get('http://'+ip_address+'/control', params=payload)
+      response = requests.get('http://'+ip_address+'/control', params=payload,timeout=5)
       response.raise_for_status()
       if response:
          logger.debug(f"Send Reflector Status ")
@@ -152,7 +152,7 @@ def oledcontrast_low(lval):
   if driver == "sh1106" or driver == "ssd1306":
      payload = {'cmd':'OLEDFRAMEDCMD,display,user,'+str(lval)+',241,64'}
   try:
-      response = requests.get('http://'+ip_address+'/control', params=payload, timeout=2)
+      response = requests.get('http://'+ip_address+'/control', params=payload, timeout=5)
       response.raise_for_status()
       if response:
          logger.debug(f"Send contral low value ")
@@ -173,7 +173,7 @@ def oledcontrast_nor(nval):
   if driver == "sh1106" or driver == "ssd1306":
      payload = {'cmd':'OLEDFRAMEDCMD,display,user,'+str(nval)+',241,64'}
   try:
-      response = requests.get('http://'+ip_address+'/control', params=payload, timeout=1)
+      response = requests.get('http://'+ip_address+'/control', params=payload, timeout=5)
       response.raise_for_status()
       if response:
          logger.debug(f"Send contral normal value ")
@@ -190,7 +190,7 @@ def oled_off():
   global ip_address
   payload = {'cmd':'OLEDFRAMEDCMD,display,off'}
   try:
-      response = requests.get('http://'+ip_address+'/control', params=payload)
+      response = requests.get('http://'+ip_address+'/control', params=payload,timeout=5)
       response.raise_for_status()
       if response:
          logger.debug(f"Send display off ")
@@ -207,7 +207,7 @@ def oled_on():
   global ip_address
   payload = {'cmd':'OLEDFRAMEDCMD,display,on'}
   try:
-      response = requests.get('http://'+ip_address+'/control', params=payload, timeout=1)
+      response = requests.get('http://'+ip_address+'/control', params=payload, timeout=5)
       response.raise_for_status()
       if response:
          logger.debug(f"Send display on ")
