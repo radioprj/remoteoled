@@ -614,32 +614,15 @@ class Screen:
             return msgc,msgt
 
     def svxlink_alive(self):
-        def __is_svxlink_alive():
-            binary_file = '/usr/bin/svxlink'
-            pid_file = "/run/svxlink.pid"
-            if not os.path.exists(pid_file):
-                logger.debug("__is_svxlink_alive: no pid file: {pid_file}")
-                return False
-
-            with open(pid_file, 'r', encoding='utf-8') as file:
-                pid = file.read().strip()
-
-            proc_path = f"/proc/{pid}"
-            if not os.path.exists(proc_path):
-                logger.debug(f"__is_svxlink_alive: no {proc_path}")
-                return False
-
-            exe_path = os.path.join(proc_path, "exe")
-            if not os.path.exists(exe_path):
-                logger.debug(f"__is_svxlink_alive: no {exe_path}")
-                return False
-
-            real_path = os.path.realpath(exe_path)
-            if real_path.find("svxlink") < 0:
-                logger.debug(f"__is_svxlink_alive: {pid} exe path {real_path} probably isn't vxlink process")
-                return False
-
-            return True
+        """Check if the svxlink process is running."""
+        for process in psutil.process_iter(['name']):
+            try:
+                if process.info['name'] == 'svxlink':
+                    return True
+            except (psutil.NoSuchProcess, psutil.AccessDenied):
+                # Ignore processes that terminate during the iteration or are inaccessible
+                pass
+        return False
         if not __is_svxlink_alive():
             self.reflector_disconnected()
 
