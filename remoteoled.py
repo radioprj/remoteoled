@@ -11,6 +11,7 @@
 # dla innych komputerow SBC  ustawic 0
 temp_offset = 0
 
+import subprocess
 import argparse
 import configparser
 import glob
@@ -614,18 +615,18 @@ class Screen:
             return msgc,msgt
 
     def svxlink_alive(self):
-        """Check if the svxlink process is running."""
-        for process in psutil.process_iter(['name']):
-            try:
-                if process.info['name'] == 'svxlink':
-                    return True
-            except (psutil.NoSuchProcess, psutil.AccessDenied):
-                # Ignore processes that terminate during the iteration or are inaccessible
-                pass
-        return False
+        """Check if the svxlink process is running using the subprocess module."""
+        try:
+            # Run the `pgrep` command to search for processes named "svxlink"
+            result = subprocess.run(['pgrep', 'svxlink'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            # If pgrep finds the process, it will return a non-empty result in stdout
+            return result.returncode == 0
+        except Exception as e:
+            print(f"An error occurred: {e}")
+            return False
         if not __is_svxlink_alive():
             self.reflector_disconnected()
-
+          
     def shutdown(self):
         ref_status("      ")
         oledcontrast_nor(self.contrast_normal_val)
