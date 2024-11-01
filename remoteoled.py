@@ -615,15 +615,16 @@ class Screen:
             return msgc,msgt
 
     def svxlink_alive(self):
-        """Check if the svxlink process is running using the subprocess module."""
-        try:
-            # Run the `pgrep` command to search for processes named "svxlink"
-            result = subprocess.run(['pgrep', 'svxlink'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-            # If pgrep finds the process, it will return a non-empty result in stdout
-            return result.returncode == 0
-        except Exception as e:
-            print(f"An error occurred: {e}")
-            return False
+        def __is_svxlink_alive():
+            """Check if the svxlink process is running using the subprocess module."""
+            try:
+                # Run the `pgrep` command to search for processes named "svxlink"
+                result = subprocess.run(['pgrep', 'svxlink'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                # If pgrep finds the process, it will return a non-empty result in stdout
+                return result.returncode == 0
+            except Exception as e:
+                print(f"An error occurred: {e}")
+                return False
         if not __is_svxlink_alive():
             self.reflector_disconnected()
           
