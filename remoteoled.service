@@ -1,7 +1,7 @@
 [Unit]
 Description=Remote OLED display SVXLink info
-Wants=network.target network-online.target
-After=multi-user.target network.target network-online.target svxlink.service
+Wants=network.target
+After=network.target svxlink.service
 Requires=svxlink.service
 PartOf=svxlink.service
 
@@ -14,6 +14,7 @@ ExecStart=/usr/bin/python3 /opt/fmpoland/remoteoled/remoteoled.py
 WorkingDirectory=/opt/fmpoland/remoteoled
 User=root
 #Nice=-10
+LimitCORE=infinity
 Restart=always
 RestartSec=30
 
