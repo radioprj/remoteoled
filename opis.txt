@@ -22,10 +22,13 @@ https://github.com/radioprj/remoteoled/blob/main/RemoteOLED.pdf
 Kiedy uruchomisz OLED z Wemos D1 mini oraz masz skonfigurowany ESPEasy i masz ustawiony 
 stały IP adres Wemos D1 możesz uruchomić instalacje pakietów niezbędnych do uruchomienia
 programu w Python3 do wysyłania danych do Remote OLED przez sieć domową internet.
-Wykonaj polecenie:
+
+---------------------------------------
+Wykonaj polecenie jeśli nie używasz gotowego obrazu fm poland:
 
 sudo -s
 /opt/fmpoland/remoteoled/install-pkg.sh
+------------------------------------------
 
 Konfiguracja programu znajduje się w pliku /opt/fmpoland/remoteoled/remoteoled.ini
 
