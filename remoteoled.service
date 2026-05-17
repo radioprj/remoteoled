@@ -9,7 +9,7 @@ StartLimitInterval=200
 StartLimitBurst=100
 
 [Service]
-Type=idle
+Type=simple
 ExecStart=/usr/bin/python3 /opt/fmpoland/remoteoled/remoteoled.py
 WorkingDirectory=/opt/fmpoland/remoteoled
 User=root
